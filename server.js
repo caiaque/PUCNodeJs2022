@@ -1,11 +1,15 @@
-const http = require ('http') 
+require('dotenv').config() 
  
-const server = http.createServer (function (req, res) { 
-    res.writeHead(200, {'Content-Type': 'text/html'}) 
-    res.end('Hello Word!')   
-} ) 
+const express = require ('express') 
+const cors = require('cors'); 
+const path  = require ('path') 
+const app = express () 
  
-const port = (process.env.PORT || 3000) 
-server.listen(port, function() { 
-    console.log (`servidor rodando --> http://localhost:${port}`) 
-}) 
+app.use(cors()) 
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true })); 
+ 
+app.use('/app', express.static (path.join (__dirname, '/public'))) 
+ 
+let port = process.env.PORT || 3000 
+app.listen (port)
